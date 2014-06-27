@@ -18,12 +18,5 @@ class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBea
          <prop key="hibernate.show_sql">true</prop>
        </props>
     </property>
- 
-    <property name="annotatedClasses">
-	<list>
-		<value>com.mkyong.stock.model.Stock</value>
-	</list>
-    </property>
- 
     </bean>
 </beans>

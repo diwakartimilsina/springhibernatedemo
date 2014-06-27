@@ -15,7 +15,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
  
     <context:component-scan
         base-package="com.tonearena.controller" />
-         
+	
+             
     <bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
@@ -23,4 +24,39 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         <property name="prefix" value="/WEB-INF/jsps/" />
         <property name="suffix" value=".jsp" />
     </bean>
+    
+     <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+    <bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+        p:location="/WEB-INF/dbconnection.properties" />
+ 
+    <bean id="dataSource"
+        class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+        p:driverClassName="${db.driver}"
+        p:url="${db.url}" p:username="${db.user}"
+        p:password="${db.password}" />
+ 
+ 	<bean id="transactionManager"
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+    </bean>    
 </beans>

@@ -1,8 +1,21 @@
 package com.tonearena.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="CONTACTS")
 public class Song {
 
+	@Id
+    @Column(name="songId")
+    @GeneratedValue
 	int songId;
+	
+	@Column(name="songName")
 	String songName;
 	
 	public int getSongId() {
