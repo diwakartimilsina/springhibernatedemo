@@ -1,24 +1,27 @@
 package com.tonearena.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.tonearena.beans.Song;
 import com.tonearena.dao.impl.SongDAOImpl;
 
+@Service
 public class SongService {
-
-	SongDAOImpl songDAO;
 	
-	public SongService(){
-		this.songDAO = new SongDAOImpl();
-	}
+	@Autowired
+	SongDAOImpl songDAOImpl;
 	
+	@Transactional
 	public void addSong(Song song){
-		this.songDAO.save(song);
+		songDAOImpl.save(song);
 	}
 	public void updateSong(Song song){
-		this.songDAO.update(song);
+		songDAOImpl.update(song);
 	}
 	public void deleteSong(Song song){
-		this.songDAO.delete(song);
+		songDAOImpl.delete(song);
 	}
 
 	

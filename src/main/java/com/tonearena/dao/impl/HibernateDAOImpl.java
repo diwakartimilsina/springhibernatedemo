@@ -1,19 +1,31 @@
 package com.tonearena.dao.impl;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public class HibernateDAOImpl<E> extends HibernateDaoSupport{
+@Repository
+public class HibernateDAOImpl<E>{
 
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public Session getSession() {
+	    return sessionFactory.getCurrentSession();
+	}
 	
+	@Transactional
 	public void save(E object){
-		getHibernateTemplate().save(object);		
+		sessionFactory.getCurrentSession().save(object);		
 	}
 	
 	public void update(E object){
-		getHibernateTemplate().update(object);		
+		sessionFactory.getCurrentSession().update(object);		
 	}
 	
 	public void delete(E object){
-		getHibernateTemplate().delete(object);		
+		sessionFactory.getCurrentSession().delete(object);		
 	}
 }
