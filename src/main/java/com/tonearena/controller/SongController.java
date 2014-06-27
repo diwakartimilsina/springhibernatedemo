@@ -21,6 +21,7 @@ import com.tonearena.service.SongService;
 	    @RequestMapping("/addSong")
 	    public ModelAndView addSong() {
 	    	song = new Song();
+	    	song.setSongName("Great git in the sky");
 	    	songSvc.addSong(song);
 	        String message = "Song has been added";
 	        return new ModelAndView("hello", "message", message);

@@ -29,7 +29,7 @@
 	</bean>
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		p:location="/WEB-INF/dbconnection.properties" />
+		p:location="classpath:dbconnection.properties" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${db.driver}" p:url="${db.url}"
