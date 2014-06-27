@@ -24,6 +24,6 @@ import com.tonearena.service.SongService;
 	    	song.setSongName("Great git in the sky");
 	    	songSvc.addSong(song);
 	        String message = "Song has been added";
-	        return new ModelAndView("hello", "message", message);
+	        return new ModelAndView("addSong", "message", message);
 	    }
 	}
