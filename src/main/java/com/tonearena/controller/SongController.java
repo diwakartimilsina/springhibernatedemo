@@ -32,8 +32,7 @@ import com.tonearena.service.SongService;
 	    }
 		
 	    @RequestMapping(value="/add", method=RequestMethod.POST)
-	    @ResponseBody
-	    public String addSong(ModelMap model, Song song) {
+	    public String addSong(Song song, ModelMap model) {
 	    	songSvc.addSong(song);
 	    	model.addAttribute("model", song);
 	        return "addSong";
