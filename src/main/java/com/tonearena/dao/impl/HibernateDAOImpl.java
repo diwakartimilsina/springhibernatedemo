@@ -1,10 +1,5 @@
 package com.tonearena.dao.impl;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +21,12 @@ public class HibernateDAOImpl<E>{
 		sessionFactory.getCurrentSession().save(object);		
 	}
 	
+	@Transactional
 	public void update(E object){
 		sessionFactory.getCurrentSession().update(object);		
 	}
 	
+	@Transactional
 	public void delete(E object){
 		sessionFactory.getCurrentSession().delete(object);		
 	}

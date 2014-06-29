@@ -12,9 +12,13 @@ public class SongDAOImpl extends HibernateDAOImpl<Song> {
 	public void save(Song song){
 		super.save(song);
 	}
+	
+	@Transactional
 	public void update(Song song){
 		super.update(song);
 	}
+	
+	@Transactional
 	public void delete(Song song){
 		super.delete(song);
 	}
