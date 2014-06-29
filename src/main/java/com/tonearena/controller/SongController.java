@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tonearena.beans.Song;
@@ -30,10 +31,9 @@ import com.tonearena.service.SongService;
 	        return "listSong";
 	    }
 		
-	    @RequestMapping(value="/add/{songName}", method=RequestMethod.POST)
-	    public String addSong(@PathVariable String songName, ModelMap model) {
-	    	song = new Song();
-	    	song.setSongName(songName);
+	    @RequestMapping(value="/add", method=RequestMethod.POST)
+	    @ResponseBody
+	    public String addSong(ModelMap model, Song song) {
 	    	songSvc.addSong(song);
 	    	model.addAttribute("model", song);
 	        return "addSong";
