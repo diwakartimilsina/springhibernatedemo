@@ -18,5 +18,4 @@ public class SongDAOImpl extends HibernateDAOImpl<Song> {
 	public void delete(Song song){
 		super.delete(song);
 	}
-
 }

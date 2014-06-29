@@ -23,7 +23,4 @@ public class SongService {
 	public void deleteSong(Song song){
 		songDAOImpl.delete(song);
 	}
-
-	
-	
 }

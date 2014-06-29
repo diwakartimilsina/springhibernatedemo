@@ -22,8 +22,8 @@ public class Song {
 	public int getSongId() {
 		return songId;
 	}
-	public void setSongId(int songId) {
-		this.songId = songId;
+	public void setSongId(int id) {
+		this.songId = id;
 	}
 	public String getSongName() {
 		return songName;
