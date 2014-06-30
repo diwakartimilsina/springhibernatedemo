@@ -17,9 +17,11 @@ public class SongService {
 	public void addSong(Song song){
 		songDAOImpl.save(song);
 	}
+	@Transactional
 	public void updateSong(Song song){
 		songDAOImpl.update(song);
 	}
+	@Transactional
 	public void deleteSong(Song song){
 		songDAOImpl.delete(song);
 	}
