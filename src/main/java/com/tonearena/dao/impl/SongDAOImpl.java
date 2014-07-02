@@ -7,7 +7,7 @@ import com.tonearena.beans.Song;
 
 @Repository
 public class SongDAOImpl extends HibernateDAOImpl<Song> {
-
+	
 	@Transactional
 	public void save(Song song){
 		super.save(song);
@@ -16,6 +16,11 @@ public class SongDAOImpl extends HibernateDAOImpl<Song> {
 	@Transactional
 	public void update(Song song){
 		super.update(song);
+	}
+	
+	@Transactional
+	public Song populate(Long id){
+		return super.populate(id);
 	}
 	
 	@Transactional

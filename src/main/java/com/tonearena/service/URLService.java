@@ -2,8 +2,6 @@ package com.tonearena.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,15 +19,18 @@ public class URLService {
 	@Autowired
 	UrlDAOImpl urlDAOImpl;
 	
-	@Transactional
 	public void addURL(MyURL url){
 		urlDAOImpl.save(url);
 	}
-	@Transactional
+	
 	public void updateURL(MyURL url){
 		urlDAOImpl.update(url);
 	}
-	@Transactional
+
+	public MyURL populateURL(Long id){
+		return urlDAOImpl.populate(id);
+	}
+	
 	public void deleteURL(MyURL url){
 		urlDAOImpl.delete(url);
 	}

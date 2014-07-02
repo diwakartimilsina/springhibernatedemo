@@ -19,6 +19,11 @@ public class UrlDAOImpl extends HibernateDAOImpl<MyURL> {
 	}
 	
 	@Transactional
+	public MyURL populate(Long id){
+		return super.populate(id);
+	}
+	
+	@Transactional
 	public void delete(MyURL url){
 		super.delete(url);
 	}

@@ -16,7 +16,7 @@ public class MyURL {
 	@Id
     @Column(name="url_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-	int URLId;
+	Long URLId;
 	
 	@Column(name="url_str")
 	String URLStr;
@@ -29,10 +29,10 @@ public class MyURL {
 		
 	}
 	
-	public int getURLId() {
+	public Long getURLId() {
 		return URLId;
 	}
-	public void setURLId(int uRLId) {
+	public void setURLId(Long uRLId) {
 		URLId = uRLId;
 	}
 	

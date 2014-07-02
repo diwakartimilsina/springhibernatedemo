@@ -1,5 +1,7 @@
 package com.tonearena.dao.impl;
 
+import java.lang.reflect.ParameterizedType;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class HibernateDAOImpl<E>{
-	
+	    
+    public Class<?> returnedClass() {
+        ParameterizedType parameterizedType = (ParameterizedType)getClass()
+                                                    .getGenericSuperclass();
+        return (Class<?>) parameterizedType.getActualTypeArguments()[0];
+   }
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -30,4 +38,10 @@ public class HibernateDAOImpl<E>{
 	public void delete(E object){
 		sessionFactory.getCurrentSession().delete(object);		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public E populate(Long id){
+		return (E) sessionFactory.getCurrentSession().load(returnedClass(),id);
+	}	
 }

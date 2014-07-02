@@ -17,7 +17,7 @@ public class Song {
 	@Id
     @Column(name="song_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-	int songId;
+	Long songId;
 	
 	@Column(name="song_name")
 	String songName;
@@ -27,11 +27,11 @@ public class Song {
 		
 	}
 	
-	public int getSongId() {
+	public Long getSongId() {
 		return songId;
 	}
 	
-	public void setSongId(int id) {
+	public void setSongId(Long id) {
 		this.songId = id;
 	}
 	public String getSongName() {

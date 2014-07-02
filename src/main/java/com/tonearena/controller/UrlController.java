@@ -1,5 +1,9 @@
 package com.tonearena.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,8 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.tonearena.beans.Song;
 import com.tonearena.beans.MyURL;
 import com.tonearena.service.URLService;
 
@@ -38,13 +43,32 @@ import com.tonearena.service.URLService;
 	    	model.addAttribute("model", myURL);
 	        return "addURL";
 	    }
+
+	    @RequestMapping(value="/addbatchsimple", method=RequestMethod.POST)
+	    @ResponseBody
+	    public String addURLBatch(@RequestParam("urlfile") MultipartFile multipartFile) throws Exception {
+	    	long before = System.currentTimeMillis();
+	    	InputStream is = multipartFile.getInputStream();
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+		    	MyURL myURL=urlSvc.fetchURLContent(line);
+		    	urlSvc.addURL(myURL);
+	        }
+	        long after = System.currentTimeMillis();
+	        return "addbatchsimple took "+(after-before)+" ms.";
+	    }
+
 	    
-	    @RequestMapping(value="/delete", method=RequestMethod.POST)
-	    public String deleteURL(MyURL url, ModelMap model) {
+	    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+	    public String deleteURL(@PathVariable Long id, ModelMap model) {
+	    	MyURL url=urlSvc.populateURL(id);
 	    	urlSvc.deleteURL(url);
 	    	model.addAttribute("model", url);
 	        return "deleteURL";
 	    }
+	    
+	    
 
 	    
 	}
