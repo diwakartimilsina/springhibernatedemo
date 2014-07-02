@@ -45,8 +45,7 @@ import com.tonearena.service.URLService;
 	    }
 
 	    @RequestMapping(value="/addbatchsimple", method=RequestMethod.POST)
-	    @ResponseBody
-	    public String addURLBatch(@RequestParam("urlfile") MultipartFile multipartFile) throws Exception {
+	    public String addURLBatch(@RequestParam("urlfile") MultipartFile multipartFile, ModelMap model) throws Exception {
 	    	long before = System.currentTimeMillis();
 	    	InputStream is = multipartFile.getInputStream();
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -56,7 +55,9 @@ import com.tonearena.service.URLService;
 		    	urlSvc.addURL(myURL);
 	        }
 	        long after = System.currentTimeMillis();
-	        return "addbatchsimple took "+(after-before)+" ms.";
+	        String msg = "addbatchsimple took "+(after-before)+" ms";
+	        model.addAttribute(msg);
+	        return "addURLBatchSimple";
 	    }
 
 	    
