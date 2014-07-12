@@ -1,5 +1,6 @@
 package com.tonearena.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public class URLService {
 
 	@Autowired
 	UrlDAOImpl urlDAOImpl;
+
+	Logger log = Logger.getLogger(URLService.class);
 	
 	public void addURL(MyURL url){
 		urlDAOImpl.save(url);

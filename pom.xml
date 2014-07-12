@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.version>3.1.4.RELEASE</spring.version>
 	</properties>
 
 	<repositories>
@@ -94,6 +94,23 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+  			 <artifactId>commons-fileupload</artifactId>
+  			 <version>1.2.1</version> <!-- makesure correct version here -->
+		</dependency>
+		<dependency>
+		      <groupId>commons-io</groupId>
+			  <artifactId>commons-io</artifactId>
+		      <version>1.4</version>
+    	</dependency>
+		
 	</dependencies>
 
 	<build>
