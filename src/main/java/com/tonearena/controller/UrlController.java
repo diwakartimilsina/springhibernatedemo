@@ -3,9 +3,7 @@ package com.tonearena.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tonearena.beans.MyURL;
 import com.tonearena.service.URLService;
-import com.tonearena.threadpools.URLThreadPool;
-
-
 	 
 	@Controller
     @RequestMapping("/url")
@@ -44,51 +39,37 @@ import com.tonearena.threadpools.URLThreadPool;
 		
 	    @RequestMapping(value="/add", method=RequestMethod.POST)
 	    public String addURL(@RequestParam String url, ModelMap model) {
-	    	MyURL myURL=urlSvc.fetchURLContent(url);
-	    	urlSvc.addURL(myURL);
-	    	model.addAttribute("model", myURL);
+	    	urlSvc.addUrl(url);
+	    	model.addAttribute("model", url);
 	        return "addURL";
 	    }
 
 	    @RequestMapping(value="/addbatchsimple", method=RequestMethod.POST)
 	    public String addURLBatch(@RequestParam("urlfile") MultipartFile multipartFile, Model model) throws Exception {
-	    	long before = System.currentTimeMillis();
-	    	log.info(multipartFile.toString());
+	    	
+	    	ArrayList<String> urls = new ArrayList<String>();
+	    	
 	    	InputStream is = multipartFile.getInputStream();
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 	        String line;
 	        while ((line = reader.readLine()) != null) {
-		    	MyURL myURL=urlSvc.fetchURLContent(line);
-		    	log.info("Currently working on: "+myURL.getURLStr());
-		    	urlSvc.addURL(myURL);
+	        	urls.add(line);
 	        }
-	        long after = System.currentTimeMillis();
-	        String msg = "addbatchsimple took "+(after-before)+" ms";
-	        model.addAttribute("model",msg);
+	        urlSvc.addUrlBatchSimple(urls);
 	        return "addURLBatchSimple";
 	    }
 
 	    @RequestMapping(value="/addbatchthreaded", method=RequestMethod.POST)
 	    public String addURLBatchThreaded(@RequestParam("urlfile") MultipartFile multipartFile, Model model) throws Exception {
-	    	long before = System.currentTimeMillis();
+	    	ArrayList<String> urls = new ArrayList<String>();
 	    	log.info(multipartFile.toString());
 	    	InputStream is = multipartFile.getInputStream();
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 	        String line;
-
-	    	ExecutorService executorService = Executors.newFixedThreadPool(10);
-
 	        while ((line = reader.readLine()) != null) {
-		    	log.info("Currently working on: "+line);
-	        	URLThreadPool urlPool = new URLThreadPool(line,urlSvc);
-		    	executorService.execute(urlPool);
+	        	urls.add(line);
 	        }
-
-	        executorService.shutdown();
-
-	        long after = System.currentTimeMillis();
-	        String msg = "addbatchthreaded took "+(after-before)+" ms";
-	        model.addAttribute("model",msg);
+	        urlSvc.addUrlBatchThreaded(urls);
 	        return "addURLBatchThreaded";
 	    }
 	    
@@ -99,8 +80,4 @@ import com.tonearena.threadpools.URLThreadPool;
 	    	model.addAttribute("model", url);
 	        return "deleteURL";
 	    }
-	    
-	    
-
-	    
 	}

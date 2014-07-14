@@ -1,21 +1,27 @@
 package com.tonearena.threadpools;
 
-import com.tonearena.beans.MyURL;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tonearena.service.URLService;
 
+@Component
 public class URLThreadPool implements Runnable{
 	
 	public String url;
+
+	@Autowired
 	public URLService urlSvc;
 	
-	public URLThreadPool(String url, URLService urlSvc){
+	public URLThreadPool(){
+		
+	}
+	
+	public void setUrl(String url){
 		this.url=url;
-		this.urlSvc=urlSvc;
 	}
 	
 	public void run(){
-    	MyURL myURL=urlSvc.fetchURLContent(url);
-    	urlSvc.addURL(myURL);		
+    	urlSvc.addUrl(url);		
 	}
-
 }
