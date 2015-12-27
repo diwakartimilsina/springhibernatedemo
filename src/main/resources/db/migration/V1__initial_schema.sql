@@ -1,4 +1,4 @@
-CREATE TABLE tonearena.songs
+CREATE TABLE songs
 (
   song_id serial NOT NULL,
   song_name character varying(100),
@@ -7,11 +7,11 @@ CREATE TABLE tonearena.songs
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE tonearena.songs
+ALTER TABLE songs
   OWNER TO toneuser;
 
 
-CREATE TABLE tonearena.urls
+CREATE TABLE urls
 (
   url_id serial NOT NULL,
   url_str character varying(100),
@@ -21,6 +21,6 @@ CREATE TABLE tonearena.urls
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE tonearena.urls
+ALTER TABLE urls
   OWNER TO toneuser;
 

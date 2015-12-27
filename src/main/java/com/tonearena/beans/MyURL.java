@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name="\"urls\"")
+@Table(name="urls")
 @XmlRootElement(name = "url")
 public class MyURL {
 

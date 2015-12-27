@@ -75,12 +75,17 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="classpath:dbconnection.properties" />
 
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${db.driver}" p:url="${db.url}"
 		p:username="${db.user}" p:password="${db.password}" />
 
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		depends-on="flyway">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.tonearena.beans"></property>
 		<property name="hibernateProperties">
@@ -95,5 +100,6 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+
 
 </beans>
