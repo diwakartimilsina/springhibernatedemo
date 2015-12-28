@@ -3,7 +3,10 @@ package com.tonearena.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,8 +32,8 @@ import com.tonearena.service.SongService;
 	        return "listSong";
 	    }
 		
-	    @RequestMapping(value="/add", method=RequestMethod.POST)
-	    public String addSong(Song song, ModelMap model) {
+	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json", "application/xml"})
+	    public String addSong(@RequestBody Song song, ModelMap model) {
 	    	songSvc.addSong(song);
 	    	model.addAttribute("model", song);
 	        return "addSong";

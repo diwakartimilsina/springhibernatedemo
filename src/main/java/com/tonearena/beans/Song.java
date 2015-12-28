@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -27,6 +28,7 @@ public class Song {
 		
 	}
 	
+	@XmlElement
 	public Long getSongId() {
 		return songId;
 	}
@@ -34,6 +36,8 @@ public class Song {
 	public void setSongId(Long id) {
 		this.songId = id;
 	}
+	
+	@XmlElement
 	public String getSongName() {
 		return songName;
 	}
