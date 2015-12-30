@@ -14,7 +14,7 @@
 
 
 	<tx:annotation-driven/>
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven validator="validator" />
 
 	<context:component-scan base-package="com.tonearena"/>
 
@@ -71,10 +71,14 @@
     	<property name="maxUploadSize" value="100000"/>
 	</bean>
 	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:messages" />
-		<property name="defaultEncoding" value="UTF-8" />
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages" />
 	</bean>
+
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    	<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="classpath:dbconnection.properties" />
