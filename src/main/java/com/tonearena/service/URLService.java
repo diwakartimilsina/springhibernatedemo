@@ -3,15 +3,21 @@ package com.tonearena.service;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.enterprise.context.spi.Context;
 
 import com.tonearena.beans.MyURL;
 import com.tonearena.dao.impl.UrlDAOImpl;
@@ -30,21 +36,24 @@ public class URLService {
 	@Autowired
 	URLThreadPool urlThreadPool;
 
-	Logger log = Logger.getLogger(URLService.class);
+	@Autowired
+    private WebApplicationContext context;
 	
-	public void addUrlToDb(MyURL url){
+	Logger log = Logger.getLogger(URLService.class);
+
+	public void addUrlToDb(MyURL url) {
 		urlDAOImpl.save(url);
 	}
-	
-	public void updateURL(MyURL url){
+
+	public void updateURL(MyURL url) {
 		urlDAOImpl.update(url);
 	}
 
-	public MyURL populateURL(Long id){
+	public MyURL populateURL(Long id) {
 		return urlDAOImpl.populate(id);
 	}
-	
-	public void deleteURL(MyURL url){
+
+	public void deleteURL(MyURL url) {
 		urlDAOImpl.delete(url);
 	}
 	
@@ -64,10 +73,10 @@ public class URLService {
             myURL.setURLContent(content.toString());
         }
         catch (MalformedURLException e) {
-            System.out.println("Malformed URL: " + e.getMessage());
+            log.error("Malformed URL: " ,e);
         }
         catch (IOException e) {
-            System.out.println("I/O Error: " + e.getMessage());
+            log.error("I/O Error: ",e);
         }
         return myURL;
 	}
@@ -91,12 +100,16 @@ public class URLService {
 	}
 	
 	public void addUrlBatchThreaded(ArrayList<String> urls){
-
+		List<String> urlList = Collections.synchronizedList(urls);
+		
         ExecutorService executorService = Executors.newFixedThreadPool(10);
+        
+        urlThreadPool = (URLThreadPool) context.getBean(URLThreadPool.class);
 
-        Iterator<String> it = urls.iterator();
+        Iterator<String> it = urlList.iterator();
         while (it.hasNext()) {
         	urlThreadPool.setUrl(it.next());
+        	log.info("Currently working on thread with URL: "+urlThreadPool.url);
 	    	executorService.execute(urlThreadPool);
         }
 
