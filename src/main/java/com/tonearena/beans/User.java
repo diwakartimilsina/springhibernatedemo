@@ -18,6 +18,20 @@ public class User {
 	
 	@Column(name="user_name")
 	public String userName;
+	
+	@Column(name="password")
+	public String password;
+	
+	@Column(name="email")
+	public String email;
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Long getUserId() {
 		return userId;
@@ -35,6 +49,12 @@ public class User {
 		this.userName = userName;
 	}
 	
-	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 }
