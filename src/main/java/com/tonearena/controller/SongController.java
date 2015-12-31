@@ -54,14 +54,7 @@ import com.tonearena.validators.SongFormValidator;
 	    }
 	    
 	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json", "application/xml"})
-	    public String addSong(@RequestBody Song song, ModelMap model) {
-	    	songSvc.addSong(song);
-	    	model.addAttribute("model", song);
-	        return "addSongSuccess";
-	    }
-	    
-	    @RequestMapping(value="/add", method=RequestMethod.POST)
-	    public String addSongFromForm(@Validated @ModelAttribute("song") Song song, BindingResult result, Model model) {
+	    public String addSong(@Validated @RequestBody Song song, BindingResult result, ModelMap model) {
 	    	if(result.hasErrors()){
 	    		return "addNewSong";
 	    	}
