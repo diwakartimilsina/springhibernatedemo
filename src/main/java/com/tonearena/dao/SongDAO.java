@@ -1,6 +1,6 @@
 package com.tonearena.dao;
 
-import com.tonearena.beans.Song;
+import com.tonearena.model.Song;
 
 
 public interface SongDAO extends BaseDAO<Song> {

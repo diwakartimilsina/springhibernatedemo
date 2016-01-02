@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
 
 import javax.enterprise.context.spi.Context;
 
-import com.tonearena.beans.MyURL;
 import com.tonearena.dao.impl.UrlDAOImpl;
+import com.tonearena.model.MyURL;
 import com.tonearena.threadpools.URLThreadPool;
 
 import net.sf.ehcache.CacheManager;

@@ -12,7 +12,6 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
-
 	<tx:annotation-driven/>
 	<mvc:annotation-driven validator="validator" />
 	<mvc:default-servlet-handler/>
@@ -36,18 +35,23 @@
 		  </bean>
   
 		  <!-- JAXB XML View -->
+  		  <!--  
 		  <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 			<constructor-arg>
 				<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 				   <property name="classesToBeBound">
 					<list>
-					   <value>com.tonearena.beans.Song</value>
-					   <value>com.tonearena.beans.MyURL</value>
+
+					   <value>com.tonearena.model.Song</value>
+					   <value>com.tonearena.model.MyURL</value>
+					   <value>com.tonearena.model.User</value>
 					</list>
 				   </property>
 				</bean>
 			</constructor-arg>
 		  </bean>
+		  -->
+		  
 		 </list>
 	  </property>
 
@@ -87,28 +91,26 @@
 	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
 	    <property name="dataSource" ref="dataSource"/>
 	</bean>
+	
+	    
+    <bean id="transactionManager" 
+          class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
+		
+    <bean id="entityManagerFactory" 
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+    	  p:dataSource-ref="dataSource"
+          p:persistenceUnitName="postgres"
+          depends-on="flyway">
+          <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        
+    </bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${db.driver}" p:url="${db.url}"
-		p:username="${db.user}" p:password="${db.password}" />
-
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-		depends-on="flyway">
-		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.tonearena.beans"></property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${db.dialect}</prop>
-				<prop key="hibernate.show_sql">true</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
+		p:username="${db.user}" p:password="${db.password}"/>
 
 </beans>

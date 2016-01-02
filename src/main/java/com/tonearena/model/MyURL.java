@@ -1,4 +1,4 @@
-package com.tonearena.beans;
+package com.tonearena.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

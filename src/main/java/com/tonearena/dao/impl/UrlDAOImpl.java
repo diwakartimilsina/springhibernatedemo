@@ -3,10 +3,10 @@ package com.tonearena.dao.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tonearena.beans.MyURL;
+import com.tonearena.model.MyURL;
 
 @Repository
-public class UrlDAOImpl extends HibernateDAOImpl<MyURL> {
+public class UrlDAOImpl extends JPADAOImpl<MyURL> {
 
 	@Transactional
 	public void save(MyURL url){
@@ -20,7 +20,7 @@ public class UrlDAOImpl extends HibernateDAOImpl<MyURL> {
 	
 	@Transactional
 	public MyURL populate(Long id){
-		return super.populate(id);
+		return super.get(id);
 	}
 	
 	@Transactional

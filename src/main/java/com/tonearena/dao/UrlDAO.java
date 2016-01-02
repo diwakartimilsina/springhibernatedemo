@@ -1,6 +1,6 @@
 package com.tonearena.dao;
 
-import com.tonearena.beans.MyURL;
+import com.tonearena.model.MyURL;
 
 
 public interface UrlDAO extends BaseDAO<MyURL> {

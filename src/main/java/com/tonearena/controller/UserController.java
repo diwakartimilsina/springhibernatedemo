@@ -6,16 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/")
-public class MainController {
+@RequestMapping("/user")
+public class UserController {
 	
-	    @RequestMapping(value="/", method=RequestMethod.GET)
-	    public String getWelcomePage(ModelMap model) {
-	        return "welcomePage";
-	    }
-	    
-	    @RequestMapping(value="/login", method=RequestMethod.GET)
-	    public String getLoginPage(ModelMap model) {
+	    @RequestMapping(value="/getuser", method=RequestMethod.GET)
+	    public String getUserInfo(ModelMap model) {
 	        return "loginPage";
 	    }
 	    

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.tonearena.beans.Song;
+import com.tonearena.model.Song;
 import com.tonearena.service.SongService;
 import com.tonearena.validators.SongFormValidator;
 
