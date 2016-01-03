@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
 
 import javax.enterprise.context.spi.Context;
 
-import com.tonearena.dao.impl.UrlDAOImpl;
 import com.tonearena.model.MyURL;
+import com.tonearena.repositories.UrlRepo;
 import com.tonearena.threadpools.URLThreadPool;
 
 import net.sf.ehcache.CacheManager;
@@ -31,7 +31,7 @@ import net.sf.ehcache.Element;
 public class URLService {
 
 	@Autowired
-	UrlDAOImpl urlDAOImpl;
+	UrlRepo urlRepo;
 	
 	@Autowired
 	URLThreadPool urlThreadPool;
@@ -41,20 +41,20 @@ public class URLService {
 	
 	Logger log = Logger.getLogger(URLService.class);
 
-	public void addUrlToDb(MyURL url) {
-		urlDAOImpl.save(url);
+	public void save(MyURL url) {
+		urlRepo.saveAndFlush(url);
 	}
 
-	public void updateURL(MyURL url) {
-		urlDAOImpl.update(url);
+	public void update(MyURL url) {
+		urlRepo.saveAndFlush(url);
 	}
 
-	public MyURL populateURL(Long id) {
-		return urlDAOImpl.populate(id);
+	public MyURL find(Long id) {
+		return urlRepo.findOne(id);
 	}
 
-	public void deleteURL(MyURL url) {
-		urlDAOImpl.delete(url);
+	public void delete(MyURL url) {
+		urlRepo.delete(url);
 	}
 	
 	public MyURL fetchURLContent(String url){
@@ -84,7 +84,7 @@ public class URLService {
 	public void addUrl(String url){
 		long before = System.currentTimeMillis();
     	MyURL myURL=fetchURLContent(url);
-    	addUrlToDb(myURL);	
+    	save(myURL);	
     	long after = System.currentTimeMillis();
     	log.info("Add Url took: "+(after-before)+" ms");
 	}

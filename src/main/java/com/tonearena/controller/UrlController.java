@@ -75,8 +75,8 @@ import com.tonearena.service.URLService;
 	    
 	    @RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
 	    public String deleteURL(@PathVariable Long id, ModelMap model) {
-	    	MyURL url=urlSvc.populateURL(id);
-	    	urlSvc.deleteURL(url);
+	    	MyURL url=urlSvc.find(id);
+	    	urlSvc.delete(url);
 	    	model.addAttribute("model", url);
 	        return "deleteURL";
 	    }

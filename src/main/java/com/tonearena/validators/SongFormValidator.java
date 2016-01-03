@@ -1,14 +1,18 @@
 package com.tonearena.validators;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.tonearena.model.Song;
+import com.tonearena.repositories.SongRepo;
 
 @Component
 public class SongFormValidator implements Validator{
+	
+		@Autowired
+		SongRepo songRepo;
 		
 		@Override
 		public boolean supports(Class<?> clazz) {
@@ -19,11 +23,9 @@ public class SongFormValidator implements Validator{
 		public void validate(Object target, Errors errors) {
 
 			Song song = (Song) target;
-
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "songName", "NotEmpty.songForm.songName");
-
-			if(song.getSongName().length() > 50){
-				errors.rejectValue("songName","Valid.songForm.songName");
+			
+			if(songRepo.findOne(song.getSongId())!=null){
+				errors.rejectValue("songName","Exists.songForm.songName");
 			}
 		}	
 }

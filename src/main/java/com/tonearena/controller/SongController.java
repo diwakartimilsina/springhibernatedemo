@@ -1,20 +1,23 @@
 package com.tonearena.controller;
 
+import org.springframework.validation.annotation.Validated;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tonearena.model.Song;
 import com.tonearena.service.SongService;
@@ -29,8 +32,6 @@ import com.tonearena.validators.SongFormValidator;
 	 
 		@Autowired
 		SongService songSvc;
-		
-		Song song;
 		
 		@Autowired
 		SongFormValidator songFormValidator;
@@ -53,14 +54,13 @@ import com.tonearena.validators.SongFormValidator;
 	        return "addNewSong";
 	    }
 	    
-	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json", "application/xml"})
-	    public String addSong(@Validated @RequestBody Song song, BindingResult result, ModelMap model) {
-	    	if(result.hasErrors()){
-	    		return "addNewSong";
-	    	}
+	    
+	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json"}, produces={"application/json"})
+	    @ResponseBody
+	    public ResponseEntity<Song> addSong(@RequestBody @Valid Song song) {
+
 	    	songSvc.addSong(song);
-	    	model.addAttribute("model", song);
-	        return "addSongSuccess";
+	    	return new ResponseEntity<Song>(song, HttpStatus.OK);
 	    }
 	    
 	    @RequestMapping(value="/delete", method=RequestMethod.POST)

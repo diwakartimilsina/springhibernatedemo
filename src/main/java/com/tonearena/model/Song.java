@@ -6,12 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.Max;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="songs")
-@XmlRootElement(name = "song")
 public class Song {
 
 	
@@ -21,6 +21,8 @@ public class Song {
 	Long songId;
 	
 	@Column(name="song_name")
+	@NotEmpty
+	@Max(50)
 	String songName;
 
 	
@@ -28,7 +30,6 @@ public class Song {
 		
 	}
 	
-	@XmlElement
 	public Long getSongId() {
 		return songId;
 	}
@@ -37,7 +38,6 @@ public class Song {
 		this.songId = id;
 	}
 	
-	@XmlElement
 	public String getSongName() {
 		return songName;
 	}

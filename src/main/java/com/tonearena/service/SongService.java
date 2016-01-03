@@ -3,25 +3,29 @@ package com.tonearena.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tonearena.dao.impl.SongDAOImpl;
 import com.tonearena.model.Song;
+import com.tonearena.repositories.SongRepo;
 
 @Service
 public class SongService {
 	
 	@Autowired
-	SongDAOImpl songDAOImpl;
+	SongRepo songRepo;
 	
 
 	public void addSong(Song song){
-		songDAOImpl.save(song);
+		songRepo.saveAndFlush(song);
 	}
 
 	public void updateSong(Song song){
-		songDAOImpl.update(song);
+		songRepo.saveAndFlush(song);
 	}
 
 	public void deleteSong(Song song){
-		songDAOImpl.delete(song);
+		songRepo.delete(song);
+	}
+	
+	public Song find(Long id){
+		return songRepo.findOne(id);
 	}
 }
