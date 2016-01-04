@@ -1,7 +1,5 @@
 package com.tonearena.controller;
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +53,7 @@ import com.tonearena.validators.SongFormValidator;
 	    
 	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json"}, produces={"application/json"})
 	    @ResponseBody
-	    public ResponseEntity<Song> addSong( @Valid @RequestBody Song song){
+	    public ResponseEntity<Song> addSong(@Valid @RequestBody Song song){
 	    	songSvc.addSong(song);
 	    	return new ResponseEntity<Song>(song, HttpStatus.OK);
 	    }

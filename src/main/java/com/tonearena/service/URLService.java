@@ -17,14 +17,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.enterprise.context.spi.Context;
-
 import com.tonearena.model.MyURL;
 import com.tonearena.repositories.UrlRepo;
 import com.tonearena.threadpools.URLThreadPool;
-
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 
 
 @Service

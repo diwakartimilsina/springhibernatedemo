@@ -6,8 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -22,7 +22,7 @@ public class Song {
 	
 	@Column(name="song_name")
 	@NotEmpty
-	@Size(min=1, max=50)
+	@Length(min=1, max=50)
 	String songName;
 
 	
