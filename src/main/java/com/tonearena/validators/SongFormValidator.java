@@ -24,7 +24,7 @@ public class SongFormValidator implements Validator{
 
 			Song song = (Song) target;
 			
-			if(songRepo.findOne(song.getSongId())!=null){
+			if(songRepo.findBySongName(song.getSongName())!=null){
 				errors.rejectValue("songName","Exists.songForm.songName");
 			}
 		}	
