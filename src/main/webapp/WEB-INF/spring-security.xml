@@ -14,7 +14,7 @@
 	
 	<beans:bean id="preauthAuthProvider"
 		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
-		<beans:property name="preAuthenticatedUserDetailsService"/>
+		<beans:property name="preAuthenticatedUserDetailsService" ref="userService"/>
 	</beans:bean>
 
 	<http auto-config="true">
