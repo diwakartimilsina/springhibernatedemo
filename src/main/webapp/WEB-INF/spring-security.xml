@@ -9,17 +9,10 @@
 	<global-method-security pre-post-annotations="enabled" />
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider ref="preauthAuthProvider" />
+		<authentication-provider user-service-ref="userDetailsService" />
 	</authentication-manager>
 	
-	<beans:bean id="preauthAuthProvider"
-		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
-		<beans:property name="preAuthenticatedUserDetailsService" ref="userDetailsService"/>
-	</beans:bean>
-	
-	<beans:bean id="userDetailsService"
-		class="com.tonearena.security.AuthorizationDetailService"> 
-	</beans:bean>
+	<beans:bean id="userDetailsService" class="com.tonearena.security.AuthorizationDetailService"/>
 
 	<http auto-config="true">
 	        <intercept-url pattern="/**" access="ROLE_USER"/>
