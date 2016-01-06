@@ -1,25 +1,24 @@
 package com.tonearena.security;
 
+import org.springframework.security.core.userdetails.User;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
-import com.tonearena.model.User;
-import com.tonearena.service.UserService;
 
 public final class TokenHandler {
 
 	private final String secret;
-	private final UserService userService;
+	private final AuthorizationDetailService authService;
 
-	public TokenHandler(String secret, UserService userService) {
+	public TokenHandler(String secret, AuthorizationDetailService authService) {
 		this.secret = secret;
-		this.userService = userService;
+		this.authService = authService;
 	}
 
 	public User parseUserFromToken(String token) {
 		String username = Jwts.parser().setSigningKey(secret)
 				.parseClaimsJws(token).getBody().getSubject();
-		return userService.loadUserByUsername(username);
+		return authService.loadUserByUsername(username);
 	}
 
 	public String createTokenForUser(User user) {

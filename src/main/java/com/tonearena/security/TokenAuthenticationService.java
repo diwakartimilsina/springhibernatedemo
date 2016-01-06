@@ -1,10 +1,10 @@
 package com.tonearena.security;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-
-import com.tonearena.model.User;
+import org.springframework.security.core.userdetails.User;
 
 public class TokenAuthenticationService {
  
@@ -12,8 +12,8 @@ public class TokenAuthenticationService {
  
      private final TokenHandler tokenHandler;
  
-     public TokenAuthenticationService(String secret, UserService userService) {
-         tokenHandler = new TokenHandler(secret, userService);
+     public TokenAuthenticationService(String secret, AuthorizationDetailService authService) {
+         tokenHandler = new TokenHandler(secret, authService);
      }
  
      public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {

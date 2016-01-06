@@ -14,7 +14,11 @@
 	
 	<beans:bean id="preauthAuthProvider"
 		class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
-		<beans:property name="preAuthenticatedUserDetailsService" ref="userService"/>
+		<beans:property name="preAuthenticatedUserDetailsService" ref="userDetailsService"/>
+	</beans:bean>
+	
+	<beans:bean id="userDetailsService"
+		class="com.tonearena.security.AuthorizationDetailService"> 
 	</beans:bean>
 
 	<http auto-config="true">

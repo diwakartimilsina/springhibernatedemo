@@ -4,11 +4,15 @@ import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-
-import com.tonearena.model.User;
+import org.springframework.security.core.userdetails.User;
 
 public class UserAuthentication implements Authentication {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8614157409620725752L;
+	
 	private final User user;
 	private boolean authenticated = true;
 
