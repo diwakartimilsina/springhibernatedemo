@@ -16,8 +16,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 
 	private final TokenAuthenticationService authenticationService;
 
-	public StatelessAuthenticationFilter(
-			TokenAuthenticationService authenticationService) {
+	public StatelessAuthenticationFilter(TokenAuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
 	}
 
