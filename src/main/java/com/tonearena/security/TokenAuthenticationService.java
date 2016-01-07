@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-@Service
 public class TokenAuthenticationService {
  
      private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";

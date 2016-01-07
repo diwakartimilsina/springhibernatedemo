@@ -14,22 +14,19 @@
 	
 	<beans:bean id="userDetailsService" class="com.tonearena.security.AuthorizationDetailService"/>
 
-	<http auto-config="true" use-expressions="false" entry-point-ref="http403EntryPoint">
+	<http auto-config="false" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
 		    <intercept-url pattern="/song/**" access="ROLE_USER"/>
 	        <intercept-url pattern="/**" access="ROLE_ANONYMOUS"/>
-	        <custom-filter ref="jwtTokenFilter" position="PRE_AUTH_FILTER"/>
+	        <custom-filter ref="jwtTokenFilter" position="FORM_LOGIN_FILTER"/>
 	</http>
-	
-	<beans:bean id="http403EntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
-    </beans:bean>
-	
+
 	<beans:bean id="jwtTokenFilter" class="com.tonearena.security.StatelessAuthenticationFilter">
 		<beans:constructor-arg ref="authenticationService"/>
 	</beans:bean>
 	
 	<beans:bean id="authenticationService" class="com.tonearena.security.TokenAuthenticationService">
-		<beans:constructor-arg type="String" value="tooManySecrets"/>
-		<beans:constructor-arg ref="userDetailsService"/>	
+		<beans:constructor-arg type="java.lang.String"><beans:value>tooManySecrets</beans:value></beans:constructor-arg>
+		<beans:constructor-arg ref="userDetailsService"/>
 	</beans:bean>
 
 </beans:beans>
