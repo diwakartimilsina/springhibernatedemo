@@ -27,11 +27,7 @@ public class UserController {
 	    public String getUserInfo(ModelMap model) {
 	        return "loginPage";
 	    }
-	    
-	    @RequestMapping(value="/login", method=RequestMethod.POST)
-	    public String doLogin(ModelMap model) {
-	        return "loginPage";
-	    }
+
 	    
 	    @RequestMapping(value="/add", method=RequestMethod.POST, consumes={"application/json"}, produces={"application/json"})
 	    @ResponseBody

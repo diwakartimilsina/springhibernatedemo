@@ -5,13 +5,13 @@ import org.springframework.stereotype.Service;
 
 import com.tonearena.model.User;
 import com.tonearena.repositories.UserRepo;
+import com.tonearena.security.TokenHandler;
 
 @Service
 public class UserService {
 	
 	@Autowired
 	UserRepo userRepo;
-	
 
 	public void addUser(User user){
 		userRepo.saveAndFlush(user);
@@ -25,8 +25,11 @@ public class UserService {
 		userRepo.delete(user);
 	}
 	
-	public void authenticate(User user){
-		
+	public boolean authenticate(User user){
+		if(userRepo.findByUserNameAndPassword(user.getUserName(), user.getPassword())!=null){
+			return true;
+		}
+		return false;
 	}
 	
 	public User findByUserName(String userName){

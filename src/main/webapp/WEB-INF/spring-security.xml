@@ -15,8 +15,8 @@
 	<beans:bean id="userDetailsService" class="com.tonearena.security.AuthorizationDetailService"/>
 
 	<http auto-config="false" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
-		    <intercept-url pattern="/song/**" access="ROLE_USER"/>
-	        <intercept-url pattern="/**" access="ROLE_ANONYMOUS"/>
+		    <intercept-url pattern="/song/**" access="hasRole('ROLE_USER')"/>
+	        <intercept-url pattern="/**" access="hasRole('ROLE_ANONYMOUS')"/>
 	        <custom-filter ref="jwtTokenFilter" position="FORM_LOGIN_FILTER"/>
 	</http>
 

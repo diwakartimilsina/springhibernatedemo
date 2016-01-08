@@ -9,4 +9,6 @@ import com.tonearena.model.User;
 public interface UserRepo extends JpaRepository<User,Long>{
 	
 	public User findByUserName(String userName);
+	public User findByUserNameAndPassword(String userName, String password);
+
 }
