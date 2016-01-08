@@ -22,9 +22,6 @@ import com.tonearena.service.UserService;
 public class AuthController {
 	
 	@Autowired
-	AuthorizationDetailService authService;
-	
-	@Autowired
 	UserService userSvc;
 	
 	@Autowired
@@ -32,14 +29,14 @@ public class AuthController {
     
     @RequestMapping(value="/login", method=RequestMethod.POST, consumes={"application/json"}, produces={"application/json"})
     @ResponseBody
-    public ResponseEntity<User> doLogin(@RequestBody UserNamePasswordDTO userNamePassword){
+    public ResponseEntity<String> doLogin(@RequestBody UserNamePasswordDTO userNamePassword){
     	User user = new User();
     	user.setUserName(userNamePassword.getUserName());
     	user.setPassword(userNamePassword.getPassword());
     	
     	if(userSvc.authenticate(user)){
-    		tokenHandler.createTokenForUser(authService.loadUserByUsername(user.getUserName()));
+    		return new ResponseEntity<String>("{token:"+'"'+tokenHandler.createTokenForUser(tokenHandler.authService.loadUserByUsername(user.getUserName()))+'"'+"}",HttpStatus.OK);
     	}
-    	return new ResponseEntity<User>(user, HttpStatus.OK);
+    	return new ResponseEntity<String>("", HttpStatus.UNAUTHORIZED);
     }
 }

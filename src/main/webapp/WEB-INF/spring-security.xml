@@ -9,10 +9,10 @@
 	<global-method-security pre-post-annotations="enabled" />
 
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetailsService" />
+		<authentication-provider user-service-ref="userDetailsServiceRef" />
 	</authentication-manager>
 	
-	<beans:bean id="userDetailsService" class="com.tonearena.security.AuthorizationDetailService"/>
+	<beans:bean id="userDetailsServiceRef" class="com.tonearena.security.AuthorizationDetailService"/>
 
 	<http auto-config="false" use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
 		    <intercept-url pattern="/song/**" access="hasRole('ROLE_USER')"/>
@@ -21,12 +21,13 @@
 	</http>
 
 	<beans:bean id="jwtTokenFilter" class="com.tonearena.security.StatelessAuthenticationFilter">
-		<beans:constructor-arg ref="authenticationService"/>
 	</beans:bean>
 	
+	<!--
 	<beans:bean id="authenticationService" class="com.tonearena.security.TokenAuthenticationService">
 		<beans:constructor-arg type="java.lang.String"><beans:value>tooManySecrets</beans:value></beans:constructor-arg>
 		<beans:constructor-arg ref="userDetailsService"/>
 	</beans:bean>
+	  -->
 
 </beans:beans>

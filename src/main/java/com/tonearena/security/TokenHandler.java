@@ -1,18 +1,22 @@
 package com.tonearena.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public final class TokenHandler {
+@Component
+public class TokenHandler {
 
-	private final String secret;
-	private final AuthorizationDetailService authService;
+	private final String secret="234234";
+	
+	@Autowired
+	public AuthorizationDetailService authService;
 
-	public TokenHandler(String secret, AuthorizationDetailService authService) {
-		this.secret = secret;
-		this.authService = authService;
+	public TokenHandler() {
+		
 	}
 
 	public User parseUserFromToken(String token) {
