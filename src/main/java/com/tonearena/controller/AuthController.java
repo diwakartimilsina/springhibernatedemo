@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tonearena.dto.UserNamePasswordDTO;
+import com.tonearena.model.AuthToken;
 import com.tonearena.model.User;
 import com.tonearena.security.AuthorizationDetailService;
 import com.tonearena.security.TokenHandler;
@@ -29,14 +30,15 @@ public class AuthController {
     
     @RequestMapping(value="/login", method=RequestMethod.POST, consumes={"application/json"}, produces={"application/json"})
     @ResponseBody
-    public ResponseEntity<String> doLogin(@RequestBody UserNamePasswordDTO userNamePassword){
+    public ResponseEntity<AuthToken> doLogin(@RequestBody UserNamePasswordDTO userNamePassword){
     	User user = new User();
     	user.setUserName(userNamePassword.getUserName());
     	user.setPassword(userNamePassword.getPassword());
-    	
+    	AuthToken token = new AuthToken();
     	if(userSvc.authenticate(user)){
-    		return new ResponseEntity<String>("{token:"+'"'+tokenHandler.createTokenForUser(tokenHandler.authService.loadUserByUsername(user.getUserName()))+'"'+"}",HttpStatus.OK);
+    		token.setTokenString(tokenHandler.createTokenForUser(tokenHandler.authService.loadUserByUsername(user.getUserName())));
+    		return new ResponseEntity<AuthToken>(token,HttpStatus.OK);
     	}
-    	return new ResponseEntity<String>("", HttpStatus.UNAUTHORIZED);
+    	return new ResponseEntity<AuthToken>(token, HttpStatus.UNAUTHORIZED);
     }
 }
