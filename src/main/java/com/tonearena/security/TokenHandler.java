@@ -1,5 +1,7 @@
 package com.tonearena.security;
 
+import java.util.UUID;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -35,7 +37,6 @@ public class TokenHandler {
 	}
 
 	public String createTokenForUser(User user) {
-		return Jwts.builder().setSubject(user.getUsername())
-				.signWith(SignatureAlgorithm.HS512, secret).compact();
+		return Jwts.builder().setSubject(user.getUsername()).setId(UUID.randomUUID().toString()).signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 }
