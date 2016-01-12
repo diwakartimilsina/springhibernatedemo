@@ -1,5 +1,6 @@
 package com.tonearena.security;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,23 @@ public class TokenHandler {
 	
 	@Autowired
 	public AuthorizationDetailService authService;
+	
+	Logger log = Logger.getLogger(TokenHandler.class);
 
 	public TokenHandler() {
 		
 	}
 
 	public User parseUserFromToken(String token) {
-		String username = Jwts.parser().setSigningKey(secret)
-				.parseClaimsJws(token).getBody().getSubject();
-		return authService.loadUserByUsername(username);
+		User user = null;
+		try{
+			String username = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+			user=authService.loadUserByUsername(username);
+		}
+		catch(Exception e){
+			log.error("Could not parse token provided in the header",e);
+		}
+		return user;
 	}
 
 	public String createTokenForUser(User user) {
