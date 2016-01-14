@@ -32,6 +32,12 @@ public class AuthorizationDetailService implements UserDetailsService {
 		return buildUserForAuthentication(user, authorities);
 
 	}
+	
+	public User loadUserFromToken(final String userName, Set<Role> roles){
+		List<GrantedAuthority> authorities = buildUserAuthority(roles);
+
+		return buildUserForAuthentication(user, authorities);
+	}
 
 	private User buildUserForAuthentication(com.tonearena.model.User user,
 			List<GrantedAuthority> authorities) {
