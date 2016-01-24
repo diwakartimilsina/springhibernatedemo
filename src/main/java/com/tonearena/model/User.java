@@ -1,6 +1,8 @@
 package com.tonearena.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -37,10 +39,10 @@ public class User {
 	@JoinTable(name="user_role",
 				joinColumns={@JoinColumn(name="user_id")},
 				inverseJoinColumns={@JoinColumn(name="role_id")})
-	private Set<Role> roles;
+	private List<Role> roles;
 
 	public User() {
-		this.roles = new HashSet<Role>();
+		this.roles = new ArrayList<Role>();
 	}
 
 	public String getEmail() {
@@ -75,11 +77,11 @@ public class User {
 		this.password = password;
 	}
 	
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return this.roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 }

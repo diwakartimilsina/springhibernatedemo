@@ -1,18 +1,19 @@
 package com.tonearena.security;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.tonearena.model.Role;
-
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -20,7 +21,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class TokenHandler {
 
 	private final String secret="234234";
-	private final long tokenValidForInMilliSeconds = 3600000;
+	private final long tokenValidForInMilliSeconds = 7200000;
 	
 	@Autowired
 	public AuthorizationDetailService authService;
@@ -31,11 +32,11 @@ public class TokenHandler {
 		
 	}
 
-	public User parseUserFromToken(String token) {
+	public UserDetails parseUserFromToken(String token) {
 		User user = null;
 		try{
 			String userName = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
-			List<Role> roles = (List<Role>) Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().get("roles");
+			List<String> roles = (List<String>) Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().get("roles");
 			return authService.loadUserFromToken(userName, roles);
 		}
 		catch(Exception e){
@@ -44,8 +45,16 @@ public class TokenHandler {
 		return user;
 	}
 
-	public String createTokenForUser(User user) {
-		return Jwts.builder().setSubject(user.getUsername()).claim("roles", user.getAuthorities())
+	public String createTokenForUser(UserDetails user) {
+		
+		// Get list of string of GrantedAuthority
+		Iterator<? extends GrantedAuthority> it = user.getAuthorities().iterator();
+		List<String> roles = new ArrayList<String>();
+		while(it.hasNext()){
+			roles.add(it.next().getAuthority());
+		}
+		
+		return Jwts.builder().setSubject(user.getUsername()).claim("roles",roles)
 				.setId(UUID.randomUUID().toString())
 				.setExpiration(new Date(System.currentTimeMillis()+tokenValidForInMilliSeconds))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
