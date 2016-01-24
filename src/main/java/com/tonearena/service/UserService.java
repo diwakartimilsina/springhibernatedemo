@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.tonearena.model.User;
 import com.tonearena.repositories.UserRepo;
-import com.tonearena.security.TokenHandler;
 
 @Service
 public class UserService {

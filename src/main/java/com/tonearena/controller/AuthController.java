@@ -1,7 +1,5 @@
 package com.tonearena.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tonearena.dto.UserNamePasswordDTO;
 import com.tonearena.model.AuthToken;
 import com.tonearena.model.User;
-import com.tonearena.security.AuthorizationDetailService;
 import com.tonearena.security.TokenHandler;
 import com.tonearena.service.UserService;
 
